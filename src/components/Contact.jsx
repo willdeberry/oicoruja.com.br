@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FloatingShapes from './FloatingShapes'
 import './Contact.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -49,6 +50,13 @@ export default function Contact() {
     <section ref={sectionRef} className="contact" id="contato">
       <div className="contact__blob contact__blob--1" aria-hidden="true" />
       <div className="contact__blob contact__blob--2" aria-hidden="true" />
+      <FloatingShapes shapes={[
+        { type: 'square',  color: 'white', size: '80px',  top: '12%',    left: '6%',      opacity: 0.08, speed: 3.5, delay: 0,   yDist: 14, rotAmt: 10 },
+        { type: 'diamond', color: 'salmon', size: '70px', bottom: '18%', right: '8%',     opacity: 0.20, speed: 4.0, delay: 0.5, yDist: 16 },
+        { type: 'circle',  color: 'white', size: '50px',  top: '55%',    left: '3%',      opacity: 0.08, speed: 3.0, delay: 0.3, yDist: 12 },
+        { type: 'square',  color: 'salmon', size: '45px', top: '20%',    right: '12%',    opacity: 0.18, speed: 2.8, delay: 0.7, yDist: 10, rotAmt: -8 },
+        { type: 'diamond', color: 'white', size: '55px',  bottom: '10%', left: '15%',     opacity: 0.08, speed: 3.8, delay: 0.2, yDist: 14, rotAmt: 6 },
+      ]} />
 
       <div className="contact__content">
         <span className="section-label contact__label">Contato</span>

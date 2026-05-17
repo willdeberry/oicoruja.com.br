@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FloatingShapes from './FloatingShapes'
 import './Portfolio.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -62,6 +63,13 @@ export default function Portfolio() {
 
   return (
     <section ref={sectionRef} className="portfolio" id="portfolio">
+      <FloatingShapes shapes={[
+        { type: 'diamond', color: 'purple',  size: '90px',  top: '8%',     left: '2%',      opacity: 0.14, speed: 3.8, delay: 0,   yDist: 16, rotAmt: 10 },
+        { type: 'circle',  color: 'salmon',  size: '260px', bottom: '-60px', right: '-40px', opacity: 0.12, speed: 4.2, delay: 0.4, yDist: 18 },
+        { type: 'square',  color: 'purple',  size: '65px',  top: '45%',    left: '1%',      opacity: 0.10, speed: 3.0, delay: 0.7, yDist: 12, rotAmt: -6 },
+        { type: 'diamond', color: 'salmon',  size: '55px',  top: '12%',    right: '6%',     opacity: 0.16, speed: 3.5, delay: 0.2, yDist: 14 },
+        { type: 'circle',  color: 'purple',  size: '45px',  bottom: '15%', left: '12%',     opacity: 0.12, speed: 2.8, delay: 0.9, yDist: 10 },
+      ]} />
       <div className="portfolio__inner">
         <div className="portfolio__header">
           <span className="section-label">Portfólio</span>

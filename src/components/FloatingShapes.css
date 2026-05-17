@@ -1,0 +1,34 @@
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.fs {
+  position: absolute;
+  border-radius: 0;
+  will-change: transform;
+}
+
+/* ── Types ────────────────────────────── */
+.fs--circle  { border-radius: 50%; }
+.fs--square  { border-radius: 22px; }
+.fs--diamond { border-radius: 14px; rotate: 45deg; }
+.fs--wave {
+  background: none !important;
+  border-radius: 0;
+  /* Drawn via box-shadow trick — actual wave via SVG-like border */
+  height: auto !important;
+  border-bottom: 6px wavy currentColor;
+  background-clip: unset;
+}
+
+/* ── Colors ───────────────────────────── */
+.fs--purple      { background: var(--purple);      color: var(--purple); }
+.fs--purple-dark { background: var(--purple-dark); color: var(--purple-dark); }
+.fs--salmon      { background: var(--salmon);      color: var(--salmon); }
+.fs--pink        { background: var(--pink);        color: var(--pink); }
+.fs--lime        { background: var(--lime);        color: var(--lime); }
+.fs--white       { background: #ffffff;            color: #ffffff; }

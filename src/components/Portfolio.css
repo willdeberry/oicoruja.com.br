@@ -1,9 +1,12 @@
 .portfolio {
+  position: relative;
   padding: 7rem 3rem;
   background: var(--gray-light);
 }
 
 .portfolio__inner {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
 }
