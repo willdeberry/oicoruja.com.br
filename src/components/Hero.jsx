@@ -12,12 +12,12 @@ export default function Hero() {
   const subRef = useRef(null)
   const ctaRef = useRef(null)
   const badgeRef = useRef(null)
+  const mascotRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.5 })
 
-      // Headline words stagger
       const words = headlineRef.current.querySelectorAll('.word')
       tl.from(words, {
         y: 60,
@@ -44,23 +44,37 @@ export default function Hero() {
         duration: 0.6,
         ease: 'back.out(1.7)',
       }, '-=0.4')
+      .from(mascotRef.current, {
+        x: 80,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      }, '-=0.8')
 
-      // Floating shapes
+      // Mascot gentle float + slight rock
+      gsap.to(mascotRef.current, {
+        y: -20,
+        duration: 3.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      })
+      gsap.to(mascotRef.current, {
+        rotate: 4,
+        duration: 4.2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 0.5,
+      })
+
+      // Background shapes
       gsap.to('.hero-shape--circle', {
         y: -18,
         duration: 3.2,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-      })
-      gsap.to('.hero-shape--square', {
-        y: 14,
-        rotate: 15,
-        duration: 2.8,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: 0.4,
       })
       gsap.to('.hero-shape--diamond', {
         y: -12,
@@ -70,14 +84,6 @@ export default function Hero() {
         yoyo: true,
         ease: 'sine.inOut',
         delay: 0.8,
-      })
-      gsap.to('.hero-shape--wave', {
-        scaleX: 1.08,
-        duration: 2.4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: 0.2,
       })
     }, sectionRef)
 
@@ -89,9 +95,7 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="hero" id="inicio">
       <Shape className="hero-shape--circle hero-shape--purple" />
-      <Shape className="hero-shape--square hero-shape--salmon" />
-      <Shape className="hero-shape--diamond hero-shape--purple-dark" />
-      <Shape className="hero-shape--wave hero-shape--salmon-soft" />
+      <Shape className="hero-shape--diamond hero-shape--salmon" />
 
       <div className="hero__inner">
         <div ref={badgeRef} className="hero__badge">
@@ -126,6 +130,13 @@ export default function Hero() {
           </a>
         </div>
       </div>
+
+      <img
+        ref={mascotRef}
+        src="/mascot.png"
+        alt="Corujinha mascote"
+        className="hero__mascot"
+      />
 
       <div className="hero__scroll-hint" aria-hidden="true">
         <span />
