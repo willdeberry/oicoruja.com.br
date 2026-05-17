@@ -62,7 +62,7 @@ export default function Contact() {
 
         <div className="contact__actions">
           <a
-            href="https://wa.me/5500000000000"
+            href="https://wa.me/5519998315115"
             target="_blank"
             rel="noreferrer"
             className="contact__btn contact__btn--whatsapp"
@@ -83,7 +83,7 @@ export default function Contact() {
 
         <p className="contact__email">
           Ou mande um e-mail para{' '}
-          <a href="mailto:oi@oicoruja.com.br">oi@oicoruja.com.br</a>
+          <a href="mailto:corujaccomunicacao@gmail.com">corujaccomunicacao@gmail.com</a>
         </p>
       </div>
     </section>

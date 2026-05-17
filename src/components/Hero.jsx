@@ -114,7 +114,7 @@ export default function Hero() {
 
         <div ref={ctaRef} className="hero__actions">
           <a
-            href="https://wa.me/5500000000000"
+            href="https://wa.me/5519998315115"
             target="_blank"
             rel="noreferrer"
             className="btn btn--primary"
