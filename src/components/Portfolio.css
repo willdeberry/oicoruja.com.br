@@ -1,0 +1,56 @@
+.portfolio {
+  padding: 7rem 3rem;
+  background: var(--gray-light);
+}
+
+.portfolio__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.portfolio__header {
+  margin-bottom: 3.5rem;
+}
+
+/* ── Grid ─────────────────────────────── */
+.portfolio__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ── Embed wrapper ────────────────────── */
+.portfolio-embed {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-embed:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+}
+
+/* Let Instagram's embed fill the wrapper */
+.portfolio-embed .instagram-media {
+  border-radius: 20px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  .portfolio__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .portfolio {
+    padding: 5rem 1.5rem;
+  }
+
+  .portfolio__grid {
+    grid-template-columns: 1fr;
+  }
+}

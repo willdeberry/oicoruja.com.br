@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'BringboldNineties';
+  src: url('/fonts/BringboldNinetiesDemo-E4O9r.ttf') format('truetype'),
+       url('/fonts/Bringboldninetiesdemo-aY5Wa.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --purple:      #6341CE;
+  --purple-dark: #380E89;
+  --salmon:      #F59A8D;
+  --pink:        #E84669;
+  --green:       #01BB5B;
+  --lime:        #91EA0F;
+  --gray-light:  #ECECEC;
+  --black:       #131214;
+  --white:       #FAFAFA;
+
+  --font-display: 'BringboldNineties', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+}
