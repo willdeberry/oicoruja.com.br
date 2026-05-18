@@ -134,8 +134,12 @@ export default function Hero() {
       <img
         ref={mascotRef}
         src="/mascot.png"
-        alt="Corujinha mascote"
+        alt="Corujinha — mascote da Coruja Comunicação"
         className="hero__mascot"
+        width="1000"
+        height="1012"
+        loading="eager"
+        fetchpriority="high"
       />
 
       <div className="hero__scroll-hint" aria-hidden="true">
