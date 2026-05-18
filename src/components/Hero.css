@@ -176,20 +176,73 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 6rem 1.5rem 4rem;
-    min-height: 100svh;
+    padding: 5.5rem 1.5rem 3rem;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: auto;
+    gap: 1.5rem;
   }
 
+  /* Mascot becomes a flow element above the text */
   .hero__mascot {
-    height: 42%;
-    right: -2%;
-    opacity: 0.35;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    height: auto;
+    max-height: none;
+    width: 240px;
+    max-width: 65%;
+    align-self: center;
+    order: -1;
+    opacity: 1;
+    margin-top: 0.5rem;
+    filter: drop-shadow(0 12px 24px rgba(99, 65, 206, 0.2));
   }
 
+  .hero__inner {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .hero__headline {
+    font-size: clamp(2.6rem, 11vw, 4rem);
+  }
+
+  .hero__sub {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero__actions {
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Tone down decorative shapes on mobile so they don't fight content */
   .hero-shape--circle {
-    width: 200px;
-    height: 200px;
-    right: -5%;
-    top: 8%;
+    width: 220px;
+    height: 220px;
+    right: -10%;
+    top: 4%;
+    opacity: 0.06;
+  }
+
+  .hero-shape--diamond {
+    width: 70px;
+    height: 70px;
+    right: 8%;
+    bottom: auto;
+    top: 25%;
+    opacity: 0.12;
+  }
+
+  /* Scroll hint takes too much real estate on mobile */
+  .hero__scroll-hint {
+    display: none;
   }
 }

@@ -32,3 +32,10 @@
 .fs--pink        { background: var(--pink);        color: var(--pink); }
 .fs--lime        { background: var(--lime);        color: var(--lime); }
 .fs--white       { background: #ffffff;            color: #ffffff; }
+
+/* Mobile: keep only the first 2 shapes per section to reduce clutter */
+@media (max-width: 768px) {
+  .fs:nth-child(n+3) {
+    display: none;
+  }
+}

@@ -14,16 +14,17 @@ export default function FloatingShapes({ shapes, trigger }) {
       const els = containerRef.current.querySelectorAll('.fs')
 
       els.forEach((el, i) => {
-        const speed  = parseFloat(el.dataset.speed)  || 3.5
-        const delay  = parseFloat(el.dataset.delay)  || 0
-        const yDist  = parseFloat(el.dataset.ydist)  || 16
-        const xDist  = parseFloat(el.dataset.xdist)  || 0
-        const rotAmt = parseFloat(el.dataset.rotamt) || 0
+        const speed   = parseFloat(el.dataset.speed)   || 3.5
+        const delay   = parseFloat(el.dataset.delay)   || 0
+        const yDist   = parseFloat(el.dataset.ydist)   || 16
+        const xDist   = parseFloat(el.dataset.xdist)   || 0
+        const rotAmt  = parseFloat(el.dataset.rotamt)  || 0
+        const targetOpacity = parseFloat(el.dataset.opacity) || 0.18
 
         gsap.fromTo(el,
           { opacity: 0, scale: 0.7 },
           {
-            opacity: 1,
+            opacity: targetOpacity,
             scale: 1,
             duration: 0.8,
             ease: 'power2.out',
@@ -62,6 +63,7 @@ export default function FloatingShapes({ shapes, trigger }) {
           data-ydist={s.yDist}
           data-xdist={s.xDist}
           data-rotamt={s.rotAmt}
+          data-opacity={s.opacity ?? 0.18}
           style={{
             width:   s.size,
             height:  s.type === 'wave' ? `calc(${s.size} / 5)` : s.size,
@@ -69,7 +71,6 @@ export default function FloatingShapes({ shapes, trigger }) {
             left:    s.left,
             right:   s.right,
             bottom:  s.bottom,
-            opacity: s.opacity ?? 0.18,
           }}
         />
       ))}
