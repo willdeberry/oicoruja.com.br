@@ -10,6 +10,8 @@ export default function Contact() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const ctx = gsap.context(() => {
       gsap.from('.contact__content > *', {
         y: 50,
@@ -77,6 +79,7 @@ export default function Contact() {
           >
             <WhatsAppIcon />
             Falar no WhatsApp
+            <span className="sr-only"> (abre em nova aba)</span>
           </a>
           <a
             href="https://www.instagram.com/coruja.comunicacao"
@@ -86,6 +89,7 @@ export default function Contact() {
           >
             <InstagramIcon />
             Ver no Instagram
+            <span className="sr-only"> (abre em nova aba)</span>
           </a>
         </div>
 

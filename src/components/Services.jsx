@@ -55,6 +55,8 @@ export default function Services() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const ctx = gsap.context(() => {
       gsap.from('.services__header', {
         y: 50,

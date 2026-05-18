@@ -15,6 +15,8 @@ export default function Hero() {
   const mascotRef = useRef(null)
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.5 })
 
@@ -124,6 +126,7 @@ export default function Hero() {
             className="btn btn--primary"
           >
             Fale com a gente
+            <span className="sr-only"> (abre em nova aba)</span>
           </a>
           <a href="#servicos" className="btn btn--ghost">
             O que fazemos

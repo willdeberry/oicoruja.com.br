@@ -49,8 +49,13 @@ export default function Portfolio() {
   const [posts] = useState(() => pickRandom(POST_POOL, PICK_COUNT))
 
   useEffect(() => {
-    // Load Instagram embed script once, then process the blockquotes
-    if (!document.getElementById('ig-embed-script')) {
+    // Defer Instagram's embed.js until the section is near the viewport —
+    // the script is heavy and Portfolio sits below the fold.
+    const loadIgEmbed = () => {
+      if (document.getElementById('ig-embed-script')) {
+        if (window.instgrm) window.instgrm.Embeds.process()
+        return
+      }
       const script = document.createElement('script')
       script.id = 'ig-embed-script'
       script.src = 'https://www.instagram.com/embed.js'
@@ -59,8 +64,19 @@ export default function Portfolio() {
         if (window.instgrm) window.instgrm.Embeds.process()
       }
       document.body.appendChild(script)
-    } else if (window.instgrm) {
-      window.instgrm.Embeds.process()
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        loadIgEmbed()
+        io.disconnect()
+      }
+    }, { rootMargin: '400px' })
+    io.observe(sectionRef.current)
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      return () => io.disconnect()
     }
 
     const ctx = gsap.context(() => {
@@ -88,7 +104,10 @@ export default function Portfolio() {
       })
     }, sectionRef)
 
-    return () => ctx.revert()
+    return () => {
+      io.disconnect()
+      ctx.revert()
+    }
   }, [])
 
   return (

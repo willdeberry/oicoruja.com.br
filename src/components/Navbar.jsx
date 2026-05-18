@@ -8,18 +8,29 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -80,
-      opacity: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-      delay: 0.2,
-    })
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.from(navRef.current, {
+        y: -80,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.2,
+      })
+    }
 
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
 
   const links = [
     { label: 'Serviços', href: '#servicos' },
@@ -31,7 +42,10 @@ export default function Navbar() {
     <nav ref={navRef} className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <a href="#" className="navbar__logo">coruja</a>
 
-      <ul className={`navbar__links${menuOpen ? ' navbar__links--open' : ''}`}>
+      <ul
+        id="navbar-menu"
+        className={`navbar__links${menuOpen ? ' navbar__links--open' : ''}`}
+      >
         {links.map(({ label, href }) => (
           <li key={href}>
             <a href={href} onClick={() => setMenuOpen(false)}>{label}</a>
@@ -51,7 +65,9 @@ export default function Navbar() {
       <button
         className={`navbar__burger${menuOpen ? ' navbar__burger--open' : ''}`}
         onClick={() => setMenuOpen(o => !o)}
-        aria-label="Menu"
+        aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+        aria-expanded={menuOpen}
+        aria-controls="navbar-menu"
       >
         <span /><span /><span />
       </button>

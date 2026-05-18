@@ -23,6 +23,7 @@ export default function Footer() {
                 rel="noreferrer"
               >
                 Instagram
+                <span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
           </ul>

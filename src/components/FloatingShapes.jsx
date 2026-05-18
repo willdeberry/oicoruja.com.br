@@ -10,16 +10,23 @@ export default function FloatingShapes({ shapes, trigger }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const ctx = gsap.context(() => {
       const els = containerRef.current.querySelectorAll('.fs')
 
-      els.forEach((el, i) => {
+      els.forEach((el) => {
         const speed   = parseFloat(el.dataset.speed)   || 3.5
         const delay   = parseFloat(el.dataset.delay)   || 0
         const yDist   = parseFloat(el.dataset.ydist)   || 16
         const xDist   = parseFloat(el.dataset.xdist)   || 0
         const rotAmt  = parseFloat(el.dataset.rotamt)  || 0
         const targetOpacity = parseFloat(el.dataset.opacity) || 0.18
+
+        if (prefersReducedMotion) {
+          gsap.set(el, { opacity: targetOpacity })
+          return
+        }
 
         gsap.fromTo(el,
           { opacity: 0, scale: 0.7 },
