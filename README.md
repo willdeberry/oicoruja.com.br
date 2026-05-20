@@ -119,3 +119,28 @@ O `nginx.conf` incluso configura:
 - **Instagram:** [@coruja.comunicacao](https://www.instagram.com/coruja.comunicacao)
 - **WhatsApp:** +55 19 99831-5115
 - **E-mail:** corujaccomunicacao@gmail.com
+
+---
+
+## Histórico de Versões
+
+### v1.1.0 — 2026-05-18
+- Modo escuro com alternador claro / escuro / sistema
+- Variante salmon do mascote para o tema escuro
+
+### v1.0.2 — 2026-05-18
+- Melhorias de acessibilidade e performance
+- Otimizações de SEO
+- Portfólio randomizado — 6 posts sorteados a cada carregamento de um pool curado de 21
+- Correção: palavras do headline do hero grudando no mobile
+- Correção: sobreposições e conflito de cores no layout mobile
+
+### v1.0.1 — 2026-05-17
+- Favicon com o mascote da corujinha leitora
+
+### v1.0.0 — 2026-05-17
+- Lançamento inicial do site institucional
+- Hero com mascote e animação flutuante via GSAP
+- Formas decorativas flutuantes nas seções de Serviços, Portfólio e Contato
+- WhatsApp e e-mail reais no bloco de contato
+- Configuração de nginx para deploy em servidor próprio
