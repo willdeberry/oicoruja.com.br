@@ -29,12 +29,10 @@ export default function Contact() {
     const form = e.currentTarget
     setStatus('submitting')
     try {
-      const formData = new FormData(form)
-      formData.append('h-captcha-response', captchaToken || '')
       const res = await fetch(WEB3FORMS_ENDPOINT, {
         method: 'POST',
         headers: { Accept: 'application/json' },
-        body: formData,
+        body: new FormData(form),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.success) {
