@@ -1,13 +1,54 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 import FloatingShapes from './FloatingShapes'
 import './Contact.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Web3Forms access key — public by design (ships in the bundle).
+// Get it from web3forms.com after verifying your email.
+const WEB3FORMS_ACCESS_KEY = '59fb0cc6-ce80-435e-aa17-431df3c7b2b7'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+
+// hCaptcha site key — also public. Get it at dashboard.hcaptcha.com.
+// The matching SECRET key goes in the Web3Forms dashboard (Form → hCaptcha),
+// never here.
+const HCAPTCHA_SITE_KEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2'
+
 export default function Contact() {
   const sectionRef = useRef(null)
+  const captchaRef = useRef(null)
+  const [captchaToken, setCaptchaToken] = useState(null)
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (status === 'submitting') return
+    const form = e.currentTarget
+    setStatus('submitting')
+    try {
+      const formData = new FormData(form)
+      formData.append('h-captcha-response', captchaToken || '')
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data.success) {
+        setStatus('success')
+        form.reset()
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+    captchaRef.current?.resetCaptcha()
+    setCaptchaToken(null)
+  }
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -93,8 +134,93 @@ export default function Contact() {
           </a>
         </div>
 
+        <form
+          className="contact__form"
+          onSubmit={handleSubmit}
+          noValidate
+          aria-busy={status === 'submitting'}
+        >
+          <p className="contact__form-intro">
+            Prefere nos mandar uma mensagem? Conte um pouquinho sobre o seu projeto.
+          </p>
+
+          <div className="contact__form-row">
+            <div className="contact__field">
+              <label htmlFor="contact-name">Nome</label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                required
+                autoComplete="name"
+              />
+            </div>
+            <div className="contact__field">
+              <label htmlFor="contact-email">E-mail</label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+              />
+            </div>
+          </div>
+
+          <div className="contact__field">
+            <label htmlFor="contact-message">Mensagem</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              required
+            />
+          </div>
+
+          <div className="contact__captcha">
+            <HCaptcha
+              ref={captchaRef}
+              sitekey={HCAPTCHA_SITE_KEY}
+              theme="light"
+              onVerify={(token) => setCaptchaToken(token)}
+              onExpire={() => setCaptchaToken(null)}
+              onError={() => setCaptchaToken(null)}
+            />
+          </div>
+
+          <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+          <input type="hidden" name="subject" value="Nova mensagem do site oicoruja.com.br" />
+          <input type="hidden" name="from_name" value="oicoruja.com.br" />
+          {/* Honeypot — bots fill this, real users never see it */}
+          <input
+            type="checkbox"
+            name="botcheck"
+            tabIndex="-1"
+            autoComplete="off"
+            aria-hidden="true"
+            className="contact__honeypot"
+          />
+
+          <button
+            type="submit"
+            className="contact__form-submit"
+            disabled={status === 'submitting' || !captchaToken}
+          >
+            {status === 'submitting' ? 'Enviando…' : 'Enviar mensagem'}
+          </button>
+
+          <p
+            className={`contact__form-status contact__form-status--${status}`}
+            role="status"
+            aria-live="polite"
+          >
+            {status === 'success' && 'Mensagem enviada! A gente entra em contato em breve.'}
+            {status === 'error' && 'Algo deu errado. Tente de novo ou use o WhatsApp acima.'}
+          </p>
+        </form>
+
         <p className="contact__email">
-          Ou mande um e-mail para{' '}
+          Ou direto para{' '}
           <a href="mailto:corujaccomunicacao@gmail.com">corujaccomunicacao@gmail.com</a>
         </p>
       </div>
