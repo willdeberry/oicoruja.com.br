@@ -167,15 +167,6 @@
   box-shadow: 0 0 0 4px rgba(245, 154, 141, 0.25);
 }
 
-.contact__honeypot {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .contact__captcha {
   display: flex;
   justify-content: center;

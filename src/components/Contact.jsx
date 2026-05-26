@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import HCaptcha from '@hcaptcha/react-hcaptcha'
 import FloatingShapes from './FloatingShapes'
 import './Contact.css'
 
@@ -12,16 +11,23 @@ gsap.registerPlugin(ScrollTrigger)
 const WEB3FORMS_ACCESS_KEY = '59fb0cc6-ce80-435e-aa17-431df3c7b2b7'
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 
-// hCaptcha site key — also public. Get it at dashboard.hcaptcha.com.
-// The matching SECRET key goes in the Web3Forms dashboard (Form → hCaptcha),
-// never here.
-const HCAPTCHA_SITE_KEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2'
-
 export default function Contact() {
   const sectionRef = useRef(null)
-  const captchaRef = useRef(null)
-  const [captchaToken, setCaptchaToken] = useState(null)
   const [status, setStatus] = useState('idle') // idle | submitting | success | error
+
+  // Lazy-load Web3Forms' client script after the form is in the DOM.
+  // It renders the hCaptcha widget inside the `.h-captcha[data-captcha="true"]`
+  // div and loads hCaptcha with ?recaptchacompat=off, which is what makes
+  // free-tier validation work (no g-recaptcha-response field).
+  useEffect(() => {
+    if (document.getElementById('w3f-client-script')) return
+    const script = document.createElement('script')
+    script.id = 'w3f-client-script'
+    script.src = 'https://web3forms.com/client/script.js'
+    script.async = true
+    script.defer = true
+    document.body.appendChild(script)
+  }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -44,8 +50,6 @@ export default function Contact() {
     } catch {
       setStatus('error')
     }
-    captchaRef.current?.resetCaptcha()
-    setCaptchaToken(null)
   }
 
   useEffect(() => {
@@ -176,33 +180,17 @@ export default function Contact() {
           </div>
 
           <div className="contact__captcha">
-            <HCaptcha
-              ref={captchaRef}
-              sitekey={HCAPTCHA_SITE_KEY}
-              theme="light"
-              onVerify={(token) => setCaptchaToken(token)}
-              onExpire={() => setCaptchaToken(null)}
-              onError={() => setCaptchaToken(null)}
-            />
+            <div className="h-captcha" data-captcha="true" />
           </div>
 
           <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
           <input type="hidden" name="subject" value="Nova mensagem do site oicoruja.com.br" />
           <input type="hidden" name="from_name" value="oicoruja.com.br" />
-          {/* Honeypot — bots fill this, real users never see it */}
-          <input
-            type="checkbox"
-            name="botcheck"
-            tabIndex="-1"
-            autoComplete="off"
-            aria-hidden="true"
-            className="contact__honeypot"
-          />
 
           <button
             type="submit"
             className="contact__form-submit"
-            disabled={status === 'submitting' || !captchaToken}
+            disabled={status === 'submitting'}
           >
             {status === 'submitting' ? 'Enviando…' : 'Enviar mensagem'}
           </button>
